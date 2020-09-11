@@ -1,6 +1,6 @@
 import { Jumbotron, Table } from "react-bootstrap";
 
-function Home({ standings }) {
+function Home({ leagueName, table }) {
   return (
     <div>
       <Jumbotron>
@@ -9,8 +9,8 @@ function Home({ standings }) {
           This is going to be really useful.
         </p>
       </Jumbotron>
-      <h2>{standings.competition.area.name}</h2>
-      {/* <Table striped bordered hover>
+      <h2>{leagueName}</h2>
+      { <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
@@ -20,16 +20,16 @@ function Home({ standings }) {
           </tr>
         </thead>
         <tbody>
-          {standings.positions.map(position => {
+          {table.map(position => {
             return (<tr>
               <td>{position.position}</td>
-              <td>{position.team}</td>
+              <td>{position.team.name}</td>
               <td>{position.goalDifference}</td>
               <td>{position.points}</td>
             </tr>)
           })}
         </tbody>
-      </Table> */}
+      </Table> }
     </div>
   );
 }
@@ -41,11 +41,12 @@ export async function getStaticProps() {
   let response = await fetch(
     'https://api.football-data.org/v2/competitions/BSA/standings',
     { headers: { 'X-Auth-Token': 'b983fc912c504740943950c82b43d99e' } }); 
-  let standings = await response.json();
+  let data = await response.json();
 
   return {
     props: {
-      standings: standings
+      leagueName: data.competition.area.name,
+      table: data.standings[0].table
     },
   };
 }
