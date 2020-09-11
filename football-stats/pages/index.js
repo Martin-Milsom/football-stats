@@ -23,9 +23,9 @@ function Home({ leagueName, table }) {
           {table.map(position => {
             return (<tr>
               <td>{position.position}</td>
-              <td>{position.team.name}</td>
+              <td><img src={position.team.crestUrl} style={{ height: "40px"}}></img> {position.team.name}</td>
               <td>{position.goalDifference}</td>
-              <td>{position.points}</td>
+              <td>{position.points}</td>              
             </tr>)
           })}
         </tbody>
