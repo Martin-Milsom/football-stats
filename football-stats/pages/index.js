@@ -45,7 +45,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      leagueName: data.competition.area.name,
+      leagueName: data.competition.area.name + ' - ' + data.competition.name,
       table: data.standings[0].table
     },
   };
