@@ -9,8 +9,8 @@ function Home({ standings }) {
           This is going to be really useful.
         </p>
       </Jumbotron>
-      <h2>{standings.leagueName}</h2>
-      <Table striped bordered hover>
+      <h2>{standings.competition.area.name}</h2>
+      {/* <Table striped bordered hover>
         <thead>
           <tr>
             <th>#</th>
@@ -29,7 +29,7 @@ function Home({ standings }) {
             </tr>)
           })}
         </tbody>
-      </Table>
+      </Table> */}
     </div>
   );
 }
@@ -38,17 +38,14 @@ function Home({ standings }) {
 export default Home;
 
 export async function getStaticProps() {
+  let response = await fetch(
+    'https://api.football-data.org/v2/competitions/BSA/standings',
+    { headers: { 'X-Auth-Token': 'b983fc912c504740943950c82b43d99e' } }); 
+  let standings = await response.json();
+
   return {
     props: {
-      standings: {
-        leagueName: "EPL Standing - 19/20 season",
-        positions: [{
-          position: 1,
-          team: "Team 111",
-          goalDifference: 77,
-          points: 60
-        }]
-      }
+      standings: standings
     },
   };
 }
