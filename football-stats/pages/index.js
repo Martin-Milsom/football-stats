@@ -1,6 +1,6 @@
 import { Jumbotron, Table } from "react-bootstrap";
 
-export default function Home() {
+function Home({ standings }) {
   return (
     <div>
       <Jumbotron>
@@ -9,7 +9,7 @@ export default function Home() {
           This is going to be really useful.
         </p>
       </Jumbotron>
-      <h2>EPL Standing - 19/20 season</h2>
+      <h2>{standings.leagueName}</h2>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -20,20 +20,35 @@ export default function Home() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Team 1</td>
-            <td>10</td>
-            <td>10</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Team 2</td>
-            <td>8</td>
-            <td>9</td>
-          </tr>
+          {standings.positions.map(position => {
+            return (<tr>
+              <td>{position.position}</td>
+              <td>{position.team}</td>
+              <td>{position.goalDifference}</td>
+              <td>{position.points}</td>
+            </tr>)
+          })}
         </tbody>
       </Table>
     </div>
   );
+}
+
+
+export default Home;
+
+export async function getStaticProps() {
+  return {
+    props: {
+      standings: {
+        leagueName: "EPL Standing - 19/20 season",
+        positions: [{
+          position: 1,
+          team: "Team 111",
+          goalDifference: 77,
+          points: 60
+        }]
+      }
+    },
+  };
 }
